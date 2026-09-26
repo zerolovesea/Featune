@@ -131,11 +131,11 @@ featune report --storage runs --study-name cli-demo --output runs/cli-demo/repor
 
 The [Chinese notebook](examples/quickstart_zh.ipynb) and [English notebook](examples/quickstart_en.ipynb) explain data splitting, Schema, search, evaluation, evidence, export and an optional LLM run. Start Jupyter from the repository root or `examples/`; the LLM cell requires `RUN_LLM=True` and configured environment variables.
 
-### Full tabular datasets and Kaggle
+### Kaggle Playground with default TabPFN v2
 
-The default TabPFN v2 has a training-row limit. For large Playground datasets, pass a scale-appropriate sklearn model through `CVEvaluator(estimator=...)`. Featune compares raw fields and controlled features on the same cross-validation folds; the examples clone the selected pipeline after independent validation and refit it on **all training rows**. The holdout never enters feature search. The [Kaggle examples](examples/kaggle/README.md) cover data loading, Schema, search, training, submission files, and reproducible runs.
+Both Playground notebooks use Featune's default TabPFN v2. Its single-fit limit is 10,000 rows with an accelerator or 1,000 on CPU, so each notebook reserves an independent holdout, samples the training rows with stratification, and predicts **every test row** in batches. Each run prints its actual training sample size; it does not claim full-data training. Featune compares raw fields and controlled features on the same cross-validation folds. The [Kaggle examples](examples/kaggle/README.md) cover data loading, Schema, search, validation, submissions, and reproducible runs.
 
-Public notebooks completed on Kaggle: [S6E9 EV purchase prediction](https://www.kaggle.com/code/yaaangzhou/featune-ev-purchase-full-data-training) · [S6E8 smartphone addiction prediction](https://www.kaggle.com/code/yaaangzhou/featune-smartphone-addiction-full-data-training). Both short-budget searches kept the baseline; scores and the late-submission note are in the examples guide.
+Public notebooks: [S6E9 EV purchase prediction](https://www.kaggle.com/code/yaaangzhou/featune-ev-purchase-with-tabpfn-v2) · [S6E8 smartphone addiction prediction](https://www.kaggle.com/code/yaaangzhou/featune-smartphone-addiction-tabpfn-v2). Run records and submission scores are in the examples guide.
 
 ## LLM semantic search
 

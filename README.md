@@ -141,11 +141,11 @@ featune report --storage runs --study-name cli-demo --output runs/cli-demo/repor
 
 [中文 notebook](examples/quickstart_zh.ipynb) 和 [English notebook](examples/quickstart_en.ipynb) 按数据切分、Schema、搜索、评估、解释、导出和可选 LLM 的顺序讲解 API。可从仓库根目录或 `examples/` 启动；LLM 单元格需显式设置 `RUN_LLM=True` 且配置好环境变量。
 
-### 全量表格数据与 Kaggle
+### Kaggle Playground：默认 TabPFN v2
 
-默认 TabPFN v2 有训练行数上限；对于几十万行的 Playground 数据，请显式给 `CVEvaluator(estimator=...)` 传入适合规模的 sklearn 模型。Featune 在相同的交叉验证折上比较原始字段与受控特征；示例在独立验证后克隆获选 pipeline，并在**全部训练行**上重新拟合。独立验证集不参与特征搜索。完整的数据读取、Schema、搜索、训练、提交文件生成与运行说明见 [Kaggle 示例](examples/kaggle/README.md)。
+两份 Playground Notebook 使用 Featune 默认的 TabPFN v2。由于单次训练限制为 GPU 最多 10,000 行、CPU 最多 1,000 行，示例先留出独立验证集，再分层抽样训练；最后在全部竞赛测试行上分批预测。Notebook 会打印实际训练样本量，**不声称使用全部训练行**。Featune 在相同的交叉验证折上比较原始字段与受控特征。完整数据读取、Schema、搜索、验证、提交说明见 [Kaggle 示例](examples/kaggle/README.md)。
 
-已在 Kaggle 云端运行的公开 Notebook：[S6E9 电动车购买预测](https://www.kaggle.com/code/yaaangzhou/featune-ev-purchase-full-data-training) · [S6E8 手机成瘾预测](https://www.kaggle.com/code/yaaangzhou/featune-smartphone-addiction-full-data-training)。两次短预算搜索均保留 baseline；分数和晚交说明见示例文档。
+公开 Notebook：[S6E9 电动车购买预测](https://www.kaggle.com/code/yaaangzhou/featune-ev-purchase-with-tabpfn-v2) · [S6E8 手机成瘾预测](https://www.kaggle.com/code/yaaangzhou/featune-smartphone-addiction-tabpfn-v2)。运行记录与提交分数见示例文档。
 
 ## LLM 语义搜索
 

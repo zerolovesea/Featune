@@ -4,7 +4,7 @@
 
 ## Data and semantics
 
-New users can start with the [quickstart](../../README_en.md#quickstart). The [Playground notebooks](../../examples/kaggle/README.md) show full-dataset training and competition submissions. These datasets exceed the default TabPFN v2 row limit, so the notebooks explicitly pass LightGBM and refit the selected pipeline on every training row after feature search.
+New users can start with the [quickstart](../../README_en.md#quickstart). The [Playground notebooks](../../examples/kaggle/README.md) show TabPFN v2 sample training and full-test competition submissions. These datasets exceed the default v2 single-fit limit, so each notebook prints the actual sampled training-row count.
 
 `X` is a pandas DataFrame with unique column names; `y` is an equally sized array or a Series with matching indexes. Keep targets out of usable fields. Schemas accept model objects or matching dictionaries:
 
@@ -65,23 +65,21 @@ time_evaluator = CVEvaluator(cv=TimeSeriesSplit(n_splits=4, gap=7))
 
 Each fold clones the model and fits feature statistics, imputation, encoding and scaling only on training rows. All trials use the same folds. Permutation importance shuffles compiled feature columns on validation rows, using the higher-is-better scorer convention. Original and derived features are shuffled separately, so it is not a total effect with descendants recomputed.
 
-For tables beyond the default TabPFN capacity, supply a sklearn-compatible estimator explicitly. Here `X_search/y_search` excludes an independent holdout. After checking that holdout using the exported fitted pipeline, clone the selected structure and refit it on every official training row:
+For large tables with the default TabPFN v2, reserve an independent holdout and stratify a training sample from the remaining rows. A single fit supports up to 10,000 rows with an accelerator or 1,000 on CPU. Here `X_search/y_search` is the search subset and `X_sample/y_sample` is the final training sample. After checking the holdout using the exported fitted pipeline, clone the selected structure and refit it on that sample:
 
 ```python
-from lightgbm import LGBMClassifier
 from sklearn.base import clone
 
 evaluator = featune.CVEvaluator(
-    estimator=LGBMClassifier(n_estimators=100, random_state=42, verbosity=-1),
     metric="auc", cv=2, importance_repeats=0,
 )
 study = featune.create_study(metric="auc", sampler=featune.RandomSampler(seed=42))
 study.optimize(X_search, y_search, schema=schema, evaluator=evaluator, n_trials=2)
 search_pipeline = study.export_pipeline()  # already fitted on X_search
-final_pipeline = clone(search_pipeline).fit(X_all, y_all)  # all labeled rows
+final_pipeline = clone(search_pipeline).fit(X_sample, y_sample)  # within the v2 limit
 ```
 
-`importance_repeats=0` saves time but produces no permutation-importance evidence. LightGBM is an optional dependency of this example, not part of Featune's default install. See the [Kaggle examples](../../examples/kaggle/README.md) for loading, validation and submission.
+`importance_repeats=0` saves time but produces no permutation-importance evidence. See the [Kaggle examples](../../examples/kaggle/README.md) for loading, sampling, validation, batched prediction and submission.
 
 ## Search and budgets
 

@@ -1,11 +1,11 @@
 {
-  "id": "yaaangzhou/featune-smartphone-addiction-full-data-training",
-  "title": "Featune smartphone addiction full data training",
+  "id": "yaaangzhou/featune-smartphone-addiction-tabpfn-v2",
+  "title": "Featune smartphone addiction TabPFN v2",
   "code_file": "s6e8.ipynb",
   "language": "python",
   "kernel_type": "notebook",
   "is_private": false,
-  "enable_gpu": false,
+  "enable_gpu": true,
   "enable_internet": true,
   "competition_sources": [
     "playground-series-s6e8"
