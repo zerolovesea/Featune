@@ -22,7 +22,7 @@ from .memory import MEMORY_VERSION, SearchMemory, SearchMemoryCompressor
 from .retrieval import BaseColumnRetriever, RetrievedColumn, SemanticColumnRetriever, column_concept
 from .schema import OPS, Contract
 
-CONTEXT_VERSION = "2"
+CONTEXT_VERSION = "3"
 
 
 def serialize(value) -> str:
@@ -297,6 +297,7 @@ class ContextBuilder:
             "task": context.schema.objective,
             "target_definition": context.schema.target_definition,
             "prediction_point": context.schema.prediction_point,
+            "search_guidance": context.schema.search_guidance,
             "estimator": context.estimator,
             "columns": compact,
             "concepts": selected_concepts,

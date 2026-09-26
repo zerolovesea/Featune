@@ -35,9 +35,14 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--trials", type=int, default=3)
     parser.add_argument("--output", default="runs/claude")
+    parser.add_argument("--guidance-file", type=Path, help="UTF-8 hypotheses to explore, sent to the LLM")
     args = parser.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(message)s")
     X, y, schema = make_dataset(n=300)
+    if args.guidance_file:
+        schema = featune.DatasetSchema.model_validate(
+            {**schema.model_dump(), "search_guidance": args.guidance_file.read_text(encoding="utf-8")}
+        )
     train_x, test_x, train_y, test_y = train_test_split(X, y, stratify=y, random_state=42)
     sampler = featune.LLMSampler(provider="anthropic", max_tokens=2048, token_budget=100_000)
     study = featune.create_study(sampler=sampler, storage=args.output, study_name="semantic")

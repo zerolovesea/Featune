@@ -139,6 +139,8 @@ Public notebooks: [S6E9 EV purchase prediction](https://www.kaggle.com/code/yaaa
 
 ## LLM semantic search
 
+Set `DatasetSchema(search_guidance="Try missing-value indicators and screen-time ratios", ...)` to feed domain or competition discussion ideas into LLM search. Guidance affects wide-table column retrieval and proposals; the closed feature DSL and cross-validation still decide what is valid and useful. The text is sent to the configured LLM provider, so omit secrets and private data. Random and evolutionary samplers do not interpret prose. `python examples/claude_search.py --guidance-file ideas.txt` reads a UTF-8 excerpt.
+
 ~~~bash
 export FEATUNE_API_KEY='your-key'
 export FEATUNE_MODEL='your-model-id'

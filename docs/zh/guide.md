@@ -22,10 +22,13 @@ schema = DatasetSchema(
     objective="仅使用申请时可见信息预测未来逾期",
     target_definition="标签 1 表示申请后 90 天内至少一次逾期；0 表示没有逾期",
     prediction_point="申请提交时，放款及还款行为发生之前",
+    search_guidance="优先尝试贷款与收入的比值，以及收入缺失标记；验证是否提升 AUC",
 )
 ```
 
 `exclude=True` 的字段不进入模型，也不能被特征引用。schema 之外的 X 列不进入模型。分区用于向 LLM 解释字段所属业务域，不是 train/test 分区。时间切分需要单独配置 CV。`objective`、`target_definition`、`prediction_point`、字段 `encoding` 和 `available_at` 会进入 LLM prompt，但不发送逐行标签或样本；这些说明不会自动识别未来泄漏，事后字段仍须显式排除。字段描述在 prompt 中最多保留前 240 个字符，重要编码约束宜写入 `encoding`。
+
+`search_guidance` 可填最多 2000 字符的讨论摘录或领域假设。它会影响宽表列检索并交给 LLM sampler 尝试；只支持现有 DSL 算子，不执行评论中的代码，不保证每条建议都能实现或提高分数。设置后改变实验指纹，恢复同一实验时需保持一致。原文会发送给配置的 LLM 服务，勿粘贴密钥或私有数据。Random/Evolution sampler 不解读这段自然语言。命令行示例可用 `python examples/claude_search.py --guidance-file ideas.txt`。
 
 数值列的 NaN/inf 在特征计算后由训练 fold 中位数补齐；空数值列保留。分类值使用包含 Python 类型的字符串编码，区分缺失及不同类型的同形值；sklearn 路径使用最多 128 类的一热编码和未知类忽略。日期统一 UTC；原始日期映射到 Unix epoch 起算的天数。已有 dtype 不符会在训练之前报错。
 

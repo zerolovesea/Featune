@@ -23,10 +23,13 @@ schema = DatasetSchema(
     objective="Predict future delinquency using information available at application",
     target_definition="1 means at least one delinquency within 90 days after application; 0 means none",
     prediction_point="At application submission, before disbursement or repayment",
+    search_guidance="Try loan-to-income ratios and missing-income indicators; check their CV AUC",
 )
 ```
 
 Excluded fields cannot enter the model or be referenced by expressions. Columns absent from the schema are ignored. Partitions describe business domains, not train/test subsets. The objective, target definition, prediction point, field encoding and availability are sent to LLM prompts without row-level labels or samples. They do not automatically detect future leakage; exclude post-prediction fields explicitly. Prompt descriptions retain only their first 240 characters, so put important code meanings in `encoding`.
+
+`search_guidance` accepts up to 2000 characters of discussion excerpts or domain hypotheses. It affects wide-schema retrieval and LLM proposals, but only existing DSL operators are executable; advice is not guaranteed to be feasible or improve the score. Changing it changes the study fingerprint, so keep it fixed when resuming. Text is sent to the configured LLM provider: do not include secrets or private data. Random/evolution samplers do not interpret prose. Try `python examples/claude_search.py --guidance-file ideas.txt` for a UTF-8 excerpt.
 
 After feature computation, nonfinite numbers become missing and fold-local median imputation handles numeric columns, preserving empty columns. Categories use type-tagged string keys that distinguish missing values and mixed Python types. The sklearn path uses one-hot encoding with at most 128 categories per field and ignores unseen categories. Dates become UTC; original date fields become days since the Unix epoch. Type mismatches fail before training.
 

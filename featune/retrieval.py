@@ -230,6 +230,8 @@ class SemanticColumnRetriever(BaseColumnRetriever):
             ]
         )
         scores = self._index.scores(query)
+        if schema.search_guidance:
+            scores += 2 * self._index.scores(schema.search_guidance)
         fields = self._index.fields
         useful = set(memory.useful_concepts)
         # Expand the neighborhoods of actually successful input fields.

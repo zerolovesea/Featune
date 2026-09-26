@@ -41,7 +41,7 @@ from .schema import DatasetSchema, FeatureSpec, FieldSchema, Hypothesis, Proposa
 from .study import FeatureStudy, Trial, create_study, load_study
 from .tabpfn import TabPFNClassifier, TabPFNRegressor
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 __all__ = [
     "TabPFNClassifier",
     "TabPFNRegressor",
