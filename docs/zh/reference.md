@@ -180,7 +180,7 @@ context = ContextBuilder(
 # 将 context_builder=context 传给 LLMSampler；构建对象不会调用 API。
 ```
 
-FieldSchema 支持 `semantic_tags`（最多 20 个短标签）、`entity`、`encoding`、`available_at`；DatasetSchema 可选 `target_definition` 和 `prediction_point`。后两者说明标签定义及预测时点，不发送逐行目标值。prompt 还包含实际 estimator 类名及可选 TabPFN 模型版本。字段可用性只是描述，事后字段仍须显式排除。概念依次采用首个标签、partition、entity、dtype；分区描述参与检索。默认本地语义索引使用字段名、描述、标签、实体、单位、编码、可用时点和类型的字符 TF-IDF，无远程 embedding 依赖，不保证识别任意同义词。可通过 BaseColumnRetriever 替换；另提供 RandomColumnRetriever、RuleBasedColumnRetriever 和 HybridColumnRetriever，后者保留一半名额做固定 seed 的随机探索。固定 schema、历史、seed 与 trial 编号时，选择可重复。
+FieldSchema 支持 `semantic_tags`（最多 20 个短标签）、`entity`、`encoding`、`available_at`；DatasetSchema 可选 `target_definition`、`prediction_point` 和 `search_guidance`（最多 2000 字符的不可信搜索假设）。后两者说明标签定义及预测时点，不发送逐行目标值。prompt 还包含实际 estimator 类名及可选 TabPFN 模型版本。字段可用性只是描述，事后字段仍须显式排除。概念依次采用首个标签、partition、entity、dtype；分区描述参与检索。默认本地语义索引使用字段名、描述、标签、实体、单位、编码、可用时点和类型的字符 TF-IDF，无远程 embedding 依赖，不保证识别任意同义词。可通过 BaseColumnRetriever 替换；另提供 RandomColumnRetriever、RuleBasedColumnRetriever 和 HybridColumnRetriever，后者保留一半名额做固定 seed 的随机探索。固定 schema、历史、seed 与 trial 编号时，选择可重复。
 
 默认达到 `retrieval_threshold=200` 时启用检索；字段数超过 `max_columns` 时也提前启用。Retriever 先按任务与有效历史概念缩小范围，ContextBuilder 再约束字段／概念数并分配信息量，自定义 Retriever 也不能突破预算。描述压缩到 240 字符。当前 parent 名称与依赖保留，新提议不能引用上下文之外的原始字段。调高 threshold 不会绕过字段硬上限。
 

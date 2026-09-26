@@ -164,6 +164,8 @@ study = featune.create_study(sampler=sampler, storage="runs", study_name="credit
 study.optimize(X, y, schema=schema, n_trials=3)
 ```
 
+可在 `DatasetSchema` 中设置 `search_guidance="尝试屏幕使用时长的缺失标记及社交/游戏时长占比"`，把竞赛讨论中的方向交给 LLM sampler。它会参与宽表字段检索及候选生成；提议仍只使用受控算子，并由交叉验证决定是否保留。方向文本会发送给配置的 LLM 服务，不要放入密钥或私有数据。随机/进化采样器不解读自然语言。可将讨论摘录存入 UTF-8 文件，再运行 `python examples/claude_search.py --guidance-file ideas.txt`。
+
 提示词只发送 schema、目标、受控特征定义、历史 trial 指标和假设，不发送原始数据行。输出必须是可解析 JSON，经重复 key/non-finite 检查、Pydantic 校验、FeatureIR 白名单校验和实际 CV 后才会进入最佳特征集。Anthropic-compatible endpoint 自动补齐 `/v1/messages`；OpenAI Chat Completions 与自定义网关示例见 [使用指南](docs/zh/guide.md#llm-协议与预算)。
 
 ## 能力总览

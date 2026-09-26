@@ -38,4 +38,6 @@ print(study.trials_dataframe())
 
 Use a larger dataset and reserve an untouched test set for real evaluation. See the [English notebook](https://github.com/zerolovesea/Featune/blob/main/examples/quickstart_en.ipynb), [Chinese notebook](https://github.com/zerolovesea/Featune/blob/main/examples/quickstart_zh.ipynb), and [API guide](https://github.com/zerolovesea/Featune/blob/main/docs/en/guide.md). LLM credentials are read from `FEATUNE_API_KEY`; keep them outside source files and notebooks.
 
+For LLM search, add `search_guidance="Try missing-value flags and useful ratios"` to `DatasetSchema` and use `LLMSampler`. Guidance affects column selection and proposals; the closed DSL and cross-validation still validate each candidate. Guidance is sent to the configured LLM provider, so omit secrets and private data.
+
 Featune source code is MIT licensed. TabPFN code and model weights have separate licenses; see the included notices. Generated pipelines may retain training data and should be handled accordingly.

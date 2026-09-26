@@ -76,6 +76,7 @@ class DatasetSchema(Contract):
         objective (str): Task description; must not disclose outer-test results.
         target_definition (str or None): Meaning, horizon and positive class of the target.
         prediction_point (str or None): When features must be available for prediction.
+        search_guidance (str or None): Optional, untrusted hypotheses to explore with an LLM sampler.
     """
 
     fields: list[FieldSchema] = Field(min_length=1)
@@ -83,6 +84,7 @@ class DatasetSchema(Contract):
     objective: str = Field(default="Improve out-of-sample predictive performance", max_length=4000)
     target_definition: str | None = Field(default=None, max_length=2000)
     prediction_point: str | None = Field(default=None, max_length=1000)
+    search_guidance: str | None = Field(default=None, max_length=2000)
 
     @model_validator(mode="after")
     def validate_fields(self):
