@@ -1,0 +1,85 @@
+# Cross-version package acceptance. Created: 2026-09-21.
+name: tests
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      tabpfn_integration:
+        description: Run licensed TabPFN-3.5 weight acceptance tests
+        type: boolean
+        default: false
+jobs:
+  core:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ['3.10', '3.11', '3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '${{ matrix.python }}'
+      - run: pip install -e '.[dev]'
+      - run: ruff check featune tests examples benchmarks
+      - run: ruff format --check featune tests examples benchmarks
+      - run: pytest -q
+      - run: python -m build
+  torch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -e '.[dev]'
+      - run: pytest tests/test_torch.py -q
+  minimum-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: pip install -e '.[dev]' 'numpy==1.24.4' 'scipy==1.11.4' 'pandas==2.0.3' 'scikit-learn==1.4.2' 'pydantic==2.10.6' 'httpx==0.27.0' 'joblib==1.3.2'
+      - run: pytest -q
+
+  tabpfn:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    env:
+      FEATUNE_TEST_TABPFN: '1'
+      TABPFN_NO_BROWSER: '1'
+      OMP_NUM_THREADS: '2'
+      TABPFN_EXCLUDE_DEVICES: cuda,mps
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - run: pip install -e '.[dev]'
+      - run: pytest tests/test_tabpfn.py -q
+      - run: python examples/quickstart.py
+
+  tabpfn35:
+    if: github.event_name == 'workflow_dispatch' && inputs.tabpfn_integration
+    environment: tabpfn-integration
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    env:
+      FEATUNE_TEST_TABPFN: '1'
+      FEATUNE_TEST_TABPFN_VERSION: v3.5
+      TABPFN_NO_BROWSER: '1'
+      TABPFN_TOKEN: ${{ secrets.TABPFN_TOKEN }}
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      OMP_NUM_THREADS: '2'
+      TABPFN_EXCLUDE_DEVICES: cuda,mps
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - run: pip install -e '.[dev]'
+      - run: pytest tests/test_tabpfn.py -q

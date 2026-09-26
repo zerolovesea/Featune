@@ -1,0 +1,14 @@
+Built with PriorLabs-TabPFN
+
+Featune source code is licensed under MIT.
+TabPFN 9.0.0 package code is licensed separately under Apache-2.0.
+The default TabPFN-2 weights are subject to LICENSES/TabPFN-v2.txt, including
+its attribution and downstream model-naming requirements. Opt-in TabPFN-3.5
+weights are subject to LICENSES/TabPFN-3.5.txt. Neither uses Featune's MIT license.
+Weights are downloaded from an immutable upstream revision, not bundled here.
+Rights to use the model are granted directly by Prior Labs, not by Featune.
+See docs/en/reference.md and docs/zh/reference.md for usage restrictions.
+
+The TABPFN-3.5 Model is licensed by Prior Labs GmbH under the TABPFN-3.5 Non-Commercial License.
+Copyright © Prior Labs GmbH 2026.
+THE SERVICES ARE PROVIDED FREE OF CHARGE: COMPANY SHALL NOT BE LIABLE FOR DAMAGES RESULTING FROM SLIGHT NEGLIGENCE. LIABILITY FOR GROSS NEGLIGENCE AND INTENTIONAL MISCONDUCT REMAINS UNAFFECTED.

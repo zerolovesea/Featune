@@ -1,0 +1,38 @@
+{
+  "fields": [
+    {
+      "name": "loan",
+      "dtype": "numeric",
+      "description": "Outstanding loan principal at application",
+      "partition": "finance",
+      "unit": "CNY",
+      "available_at": "Application submission",
+      "exclude": false
+    },
+    {
+      "name": "income",
+      "dtype": "numeric",
+      "description": "Monthly disposable income at application",
+      "partition": "finance",
+      "unit": "CNY/month",
+      "encoding": "Monthly amount; zero means no reported disposable income",
+      "available_at": "Application submission",
+      "exclude": false
+    },
+    {
+      "name": "age",
+      "dtype": "numeric",
+      "description": "Applicant age at application",
+      "partition": "profile",
+      "unit": "year",
+      "exclude": false
+    }
+  ],
+  "partitions": {
+    "finance": "Pre-decision financial information",
+    "profile": "Applicant demographics"
+  },
+  "objective": "Predict future default using only information available at application",
+  "target_definition": "1 means at least one default within 90 days after application; 0 means none",
+  "prediction_point": "At application submission, before disbursement or repayment"
+}

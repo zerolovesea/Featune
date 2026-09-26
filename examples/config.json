@@ -1,0 +1,30 @@
+{
+  "data": {
+    "path": "data/loans.csv",
+    "target": "default"
+  },
+  "schema": "schema.json",
+  "sampler": {
+    "type": "random",
+    "seed": 42
+  },
+  "study": {
+    "metric": "auc",
+    "direction": "maximize",
+    "storage": "../runs",
+    "study_name": "cli-demo",
+    "search_strategy": "beam",
+    "beam_width": 3
+  },
+  "evaluation": {
+    "cv": 3,
+    "metrics": [
+      "accuracy",
+      "log_loss"
+    ]
+  },
+  "optimize": {
+    "n_trials": 3
+  },
+  "report": true
+}
