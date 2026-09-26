@@ -23,7 +23,7 @@ unzip -o runs/kaggle/s6e8/playground-series-s6e8.zip -d runs/kaggle/s6e8
 jupyter lab examples/kaggle/s6e9/s6e9.ipynb
 ```
 
-Run S6E8 by opening its notebook similarly. Locally generated submissions stay under ignored `runs/kaggle/`. On Kaggle, the competition source is attached by the notebook metadata and `submission.csv` is written to `/kaggle/working/`. The notebooks install `featune==1.0.0` only when Featune is absent; internet must be enabled for that first install.
+Run S6E8 by opening its notebook similarly. Locally generated submissions stay under ignored `runs/kaggle/`. On Kaggle, the competition source is attached by the notebook metadata and `submission.csv` is written to `/kaggle/working/`. S6E9 installs `featune==1.0.0` and S6E8 installs `featune==1.1.0` only when Featune is absent; internet must be enabled for that first install.
 
 S6E9 remains open through 2026-09-30 23:59 UTC. S6E8 closed on 2026-08-31 and accepts **late submissions**, which do not change the original competition standings. Competition data are not committed or redistributed here.
 
@@ -43,6 +43,7 @@ The inner CV score and local holdout AUC are different from Kaggle's leaderboard
 | Episode | Final fit rows | Baseline / best inner CV AUC | Untouched holdout AUC | Kaggle score |
 |---|---:|---:|---:|---:|
 | S6E9 | 10,000 | 0.941619 / 0.941619 | 0.942109 | Public 0.93720 |
-| S6E8 (late) | 10,000 | 0.918793 / 0.922253 | 0.923583 | Public 0.93614 · private 0.93723 |
+| S6E8 (late, original) | 10,000 | 0.918793 / 0.922253 | 0.923583 | Public 0.93614 · private 0.93723 |
+| S6E8 (late, screen-time reconstruction + missing flags) | 10,000 | 0.921913 / 0.922825 | 0.924915 | Public 0.93743 · private 0.93846 |
 
-These are single-split, single-seed example results. S6E9 retained the raw-field baseline; S6E8 selected one controlled multiplication feature. Earlier full-data LightGBM scores are excluded because they are not results from these notebooks. S6E8 is closed and accepts late submissions, which do not change the original competition standings.
+These are single-split, single-seed example results. S6E9 retained the raw-field baseline; S6E8 selected one controlled multiplication feature. The S6E8 source now also includes six screen-time ratios; its full Kaggle run is pending, so no leaderboard score is claimed for that revision. Earlier full-data LightGBM scores are excluded because they are not results from these notebooks. S6E8 is closed and accepts late submissions, which do not change the original competition standings.
