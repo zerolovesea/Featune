@@ -133,7 +133,7 @@ The [Chinese notebook](examples/quickstart_zh.ipynb) and [English notebook](exam
 
 ### Kaggle Playground with default TabPFN v2
 
-Both Playground notebooks use Featune's default TabPFN v2. Its single-fit limit is 10,000 rows with an accelerator or 1,000 on CPU, so each notebook reserves an independent holdout, samples the training rows with stratification, and predicts **every test row** in batches. Each run prints its actual training sample size; it does not claim full-data training. Featune compares raw fields and controlled features on the same cross-validation folds. The [Kaggle examples](examples/kaggle/README.md) cover data loading, Schema, search, validation, submissions, and reproducible runs.
+Both Playground notebooks use Featune's default TabPFN v2. Its single-fit limit is 10,000 rows with an accelerator or 1,000 on CPU, so each notebook reserves an independent holdout, samples the training rows with stratification, and predicts **every test row** in batches. Each run prints its actual training sample size; it does not claim full-data training. Multiple differently sampled v2 models could cover more training rows through an ensemble, at substantially higher compute cost. Featune compares raw fields and controlled features on the same cross-validation folds. The [Kaggle examples](examples/kaggle/README.md) cover data loading, Schema, search, validation, submissions, and reproducible runs.
 
 Public notebooks: [S6E9 EV purchase prediction](https://www.kaggle.com/code/yaaangzhou/featune-ev-purchase-with-tabpfn-v2) · [S6E8 smartphone addiction prediction](https://www.kaggle.com/code/yaaangzhou/featune-smartphone-addiction-tabpfn-v2). Run records and submission scores are in the examples guide.
 

@@ -143,7 +143,7 @@ featune report --storage runs --study-name cli-demo --output runs/cli-demo/repor
 
 ### Kaggle Playground：默认 TabPFN v2
 
-两份 Playground Notebook 使用 Featune 默认的 TabPFN v2。由于单次训练限制为 GPU 最多 10,000 行、CPU 最多 1,000 行，示例先留出独立验证集，再分层抽样训练；最后在全部竞赛测试行上分批预测。Notebook 会打印实际训练样本量，**不声称使用全部训练行**。Featune 在相同的交叉验证折上比较原始字段与受控特征。完整数据读取、Schema、搜索、验证、提交说明见 [Kaggle 示例](examples/kaggle/README.md)。
+两份 Playground Notebook 使用 Featune 默认的 TabPFN v2。由于单次训练限制为 GPU 最多 10,000 行、CPU 最多 1,000 行，示例先留出独立验证集，再分层抽样训练；最后在全部竞赛测试行上分批预测。Notebook 会打印实际训练样本量，**不声称使用全部训练行**。若要让 v2 覆盖更多训练行，可训练多个不同抽样子模型并集成预测，但计算量会明显增加。Featune 在相同的交叉验证折上比较原始字段与受控特征。完整数据读取、Schema、搜索、验证、提交说明见 [Kaggle 示例](examples/kaggle/README.md)。
 
 公开 Notebook：[S6E9 电动车购买预测](https://www.kaggle.com/code/yaaangzhou/featune-ev-purchase-with-tabpfn-v2) · [S6E8 手机成瘾预测](https://www.kaggle.com/code/yaaangzhou/featune-smartphone-addiction-tabpfn-v2)。运行记录与提交分数见示例文档。
 

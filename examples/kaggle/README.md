@@ -40,4 +40,9 @@ S6E9 remains open through 2026-09-30 23:59 UTC. S6E8 closed on 2026-08-31 and ac
 
 The inner CV score and local holdout AUC are different from Kaggle's leaderboard score. The two-trial budget here demonstrates the workflow; it does not establish statistical superiority. No LLM key is required or embedded in a public notebook.
 
-Run results and Kaggle scores will be recorded after the public TabPFN v2 versions finish. Earlier full-data LightGBM scores are excluded because they are not results from these notebooks. S6E8 is closed and accepts late submissions, which do not change the original competition standings.
+| Episode | Final fit rows | Baseline / best inner CV AUC | Untouched holdout AUC | Kaggle score |
+|---|---:|---:|---:|---:|
+| S6E9 | 10,000 | 0.941619 / 0.941619 | 0.942109 | Public 0.93720 |
+| S6E8 (late) | 10,000 | 0.918793 / 0.922253 | 0.923583 | Public 0.93614 · private 0.93723 |
+
+These are single-split, single-seed example results. S6E9 retained the raw-field baseline; S6E8 selected one controlled multiplication feature. Earlier full-data LightGBM scores are excluded because they are not results from these notebooks. S6E8 is closed and accepts late submissions, which do not change the original competition standings.
