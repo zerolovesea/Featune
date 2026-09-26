@@ -1,0 +1,15 @@
+{
+  "id": "yaaangzhou/featune-smartphone-addiction-full-data-training",
+  "title": "Featune smartphone addiction full data training",
+  "code_file": "s6e8.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": false,
+  "enable_internet": true,
+  "competition_sources": [
+    "playground-series-s6e8"
+  ],
+  "dataset_sources": [],
+  "kernel_sources": []
+}

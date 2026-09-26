@@ -11,7 +11,7 @@ Featune 把字段语义、候选特征、交叉验证和资源预算放进同一
   <img src="https://img.shields.io/badge/python-3.10%2B-3776AB.svg?logo=python&logoColor=white" alt="Python 3.10+" />
 </p>
 
-中文 · [English](README_en.md) · [使用指南](docs/zh/guide.md) · [DSL/API](docs/zh/reference.md) · [实验结果](benchmarks/README.md) · [对比方案](benchmarks/COMPARISON_PLAN.md) · [设计与进度](IMPLEMENTATION_PLAN.md)
+中文 · [English](README_en.md) · [使用指南](docs/zh/guide.md) · [DSL/API](docs/zh/reference.md) · [实验结果](benchmarks/README.md) · [Kaggle 示例](examples/kaggle/README.md)
 
 ## 为什么是 Featune
 
@@ -87,7 +87,7 @@ source .venv/bin/activate
 pip install featune
 ```
 
-可选依赖：
+在仓库中运行开发示例或基准测试时安装可选依赖：
 
 ```bash
 pip install -e '.[benchmark]'                 # OpenFE、LightGBM、公开数据集实验
@@ -140,6 +140,12 @@ featune report --storage runs --study-name cli-demo --output runs/cli-demo/repor
 ```
 
 [中文 notebook](examples/quickstart_zh.ipynb) 和 [English notebook](examples/quickstart_en.ipynb) 按数据切分、Schema、搜索、评估、解释、导出和可选 LLM 的顺序讲解 API。可从仓库根目录或 `examples/` 启动；LLM 单元格需显式设置 `RUN_LLM=True` 且配置好环境变量。
+
+### 全量表格数据与 Kaggle
+
+默认 TabPFN v2 有训练行数上限；对于几十万行的 Playground 数据，请显式给 `CVEvaluator(estimator=...)` 传入适合规模的 sklearn 模型。Featune 在相同的交叉验证折上比较原始字段与受控特征；示例在独立验证后克隆获选 pipeline，并在**全部训练行**上重新拟合。独立验证集不参与特征搜索。完整的数据读取、Schema、搜索、训练、提交文件生成与运行说明见 [Kaggle 示例](examples/kaggle/README.md)。
+
+已在 Kaggle 云端运行的公开 Notebook：[S6E9 电动车购买预测](https://www.kaggle.com/code/yaaangzhou/featune-ev-purchase-full-data-training) · [S6E8 手机成瘾预测](https://www.kaggle.com/code/yaaangzhou/featune-smartphone-addiction-full-data-training)。两次短预算搜索均保留 baseline；分数和晚交说明见示例文档。
 
 ## LLM 语义搜索
 
@@ -247,9 +253,9 @@ OpenFE 在该受限数值对照上分数更高；这不证明它在完整搜索�
 
 ## 文档与开发
 
-- [实施计划与验收记录](IMPLEMENTATION_PLAN.md)
 - [中文指南](docs/zh/guide.md) · [English guide](docs/en/guide.md)
 - [中文 DSL/API](docs/zh/reference.md) · [English DSL/API](docs/en/reference.md)
+- [Kaggle Playground 完整示例](examples/kaggle/README.md)
 - [实验方法与结果](benchmarks/README.md)
 - [分层对比方案](benchmarks/COMPARISON_PLAN.md)
 - [贡献指南](CONTRIBUTING.md)

@@ -11,7 +11,7 @@ Featune puts field semantics, candidate features, cross-validation, and resource
   <img src="https://img.shields.io/badge/python-3.10%2B-3776AB.svg?logo=python&logoColor=white" alt="Python 3.10+" />
 </p>
 
-[中文](README.md) · English · [Guide](docs/en/guide.md) · [DSL/API](docs/en/reference.md) · [Results](benchmarks/README.md) · [Comparison plan](benchmarks/COMPARISON_PLAN.md) · [Design/status](IMPLEMENTATION_PLAN.md)
+[中文](README.md) · English · [Guide](docs/en/guide.md) · [DSL/API](docs/en/reference.md) · [Results](benchmarks/README.md) · [Kaggle examples](examples/kaggle/README.md)
 
 ## Why Featune
 
@@ -83,7 +83,7 @@ source .venv/bin/activate
 pip install featune
 ~~~
 
-Optional extras:
+For examples and benchmarks run from a repository checkout, install optional extras:
 
 ~~~bash
 pip install -e '.[benchmark]'                 # OpenFE, LightGBM, public-data benchmarks
@@ -130,6 +130,12 @@ featune report --storage runs --study-name cli-demo --output runs/cli-demo/repor
 ~~~
 
 The [Chinese notebook](examples/quickstart_zh.ipynb) and [English notebook](examples/quickstart_en.ipynb) explain data splitting, Schema, search, evaluation, evidence, export and an optional LLM run. Start Jupyter from the repository root or `examples/`; the LLM cell requires `RUN_LLM=True` and configured environment variables.
+
+### Full tabular datasets and Kaggle
+
+The default TabPFN v2 has a training-row limit. For large Playground datasets, pass a scale-appropriate sklearn model through `CVEvaluator(estimator=...)`. Featune compares raw fields and controlled features on the same cross-validation folds; the examples clone the selected pipeline after independent validation and refit it on **all training rows**. The holdout never enters feature search. The [Kaggle examples](examples/kaggle/README.md) cover data loading, Schema, search, training, submission files, and reproducible runs.
+
+Public notebooks completed on Kaggle: [S6E9 EV purchase prediction](https://www.kaggle.com/code/yaaangzhou/featune-ev-purchase-full-data-training) · [S6E8 smartphone addiction prediction](https://www.kaggle.com/code/yaaangzhou/featune-smartphone-addiction-full-data-training). Both short-budget searches kept the baseline; scores and the late-submission note are in the examples guide.
 
 ## LLM semantic search
 
@@ -237,8 +243,8 @@ Choose by task rather than brand ranking: evaluate OpenFE for large row-local nu
 
 ## Documentation and development
 
-- [Implementation plan](IMPLEMENTATION_PLAN.md)
 - [Guide](docs/en/guide.md) · [API reference](docs/en/reference.md)
+- [Full Kaggle Playground examples](examples/kaggle/README.md)
 - [Benchmark methods/results](benchmarks/README.md)
 - [Layered comparison plan](benchmarks/COMPARISON_PLAN.md)
 - [Contributing](CONTRIBUTING.md)

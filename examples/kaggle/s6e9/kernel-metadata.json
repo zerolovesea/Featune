@@ -1,0 +1,15 @@
+{
+  "id": "yaaangzhou/featune-ev-purchase-full-data-training",
+  "title": "Featune EV purchase full data training",
+  "code_file": "s6e9.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": false,
+  "enable_internet": true,
+  "competition_sources": [
+    "playground-series-s6e9"
+  ],
+  "dataset_sources": [],
+  "kernel_sources": []
+}

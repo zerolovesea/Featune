@@ -4,6 +4,8 @@
 
 ## 数据与语义
 
+如果是第一次使用，先运行 [五分钟示例](../../README.md#五分钟示例)；完整的大数据训练与竞赛提交见 [Playground notebooks](../../examples/kaggle/README.md)。Playground 中数十万行数据超过默认 TabPFN v2 的容量，示例显式传入 LightGBM，并在特征搜索结束后用全部训练行重新拟合获选 pipeline。
+
 输入 `X` 为列名唯一的 pandas DataFrame，`y` 为同长度数组或索引与 X 一致的 Series。目标不能放进可用字段中。schema 可使用 Pydantic 对象或对应字典：
 
 ```python
@@ -65,6 +67,24 @@ time_evaluator = CVEvaluator(cv=TimeSeriesSplit(n_splits=4, gap=7))
 ```
 
 每个 trial 克隆 estimator；编译器、统计映射、补齐、编码、标准化都只在该 fold 的训练数据上拟合。baseline 和所有候选使用相同 folds。importance 在验证集对编译后的特征逐列置换，使用 scorer 的“越大越好”方向，因此正值表示对预测有帮助。原始字段与其派生字段是分别置换的，不是连带重算后的总效应。
+
+对超过默认 TabPFN 容量的大表，显式指定 sklearn 兼容模型；下面的 `X_search/y_search` 是预先留出独立验证集后的训练部分。搜索结束后，先用导出的已拟合 pipeline 检查独立验证集，再克隆同一结构并在全部官方训练行上重新拟合：
+
+```python
+from lightgbm import LGBMClassifier
+from sklearn.base import clone
+
+evaluator = featune.CVEvaluator(
+    estimator=LGBMClassifier(n_estimators=100, random_state=42, verbosity=-1),
+    metric="auc", cv=2, importance_repeats=0,
+)
+study = featune.create_study(metric="auc", sampler=featune.RandomSampler(seed=42))
+study.optimize(X_search, y_search, schema=schema, evaluator=evaluator, n_trials=2)
+search_pipeline = study.export_pipeline()  # 已在 X_search 上拟合
+final_pipeline = clone(search_pipeline).fit(X_all, y_all)  # 全部训练行
+```
+
+`importance_repeats=0` 节省计算，但不产生 permutation importance 证据。`LightGBM` 是示例的额外依赖，不属于 Featune 默认安装。完整数据准备、验证和提交见 [Kaggle 示例](../../examples/kaggle/README.md)。
 
 ## 特征集合搜索与预算
 

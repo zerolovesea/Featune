@@ -24,6 +24,7 @@ runs/
 # Maintained example inputs, not generated experiment artifacts.
 !examples/config.json
 !examples/schema.json
+!examples/kaggle/*/kernel-metadata.json
 !examples/data/loans.csv
 !examples/data/adult_income.csv
 # Publish only reviewed Markdown summaries and the referenced comparison figure.

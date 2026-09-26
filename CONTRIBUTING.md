@@ -1,8 +1,8 @@
 # Contributing / 贡献指南
 
-Start with the [current design and implementation status](IMPLEMENTATION_PLAN.md) and [developer handoff](docs-for-agent.md). Update shipped behavior, validation scope and open work together when changing a contract; do not present a planned capability as implemented.
+Start with the [guide](docs/en/guide.md), [API reference](docs/en/reference.md), and [benchmark protocol](benchmarks/README.md). Update shipped behavior, validation scope and open work together when changing a contract; do not present a planned capability as implemented.
 
-开发前先读[设计与实施状态](IMPLEMENTATION_PLAN.md)和[开发交接](docs-for-agent.md)。契约变更时同步更新已实现行为、验证范围和待办，不把规划能力写成当前事实。
+开发前先读[使用指南](docs/zh/guide.md)、[API 参考](docs/zh/reference.md)和[实验协议](benchmarks/README.md)。契约变更时同步更新已实现行为、验证范围和待办，不把规划能力写成当前事实。
 
 Python source files begin with an English module description and creation date. Keep public concepts consistent: Schema → Proposal → FeatureCompiler → CVEvaluator → Trial → FeatureStudy. Follow the structure of the existing modules; avoid a second implementation of the same operation or evaluation path.
 
